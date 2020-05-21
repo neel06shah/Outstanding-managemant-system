@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingBottom="?attr/actionBarSize">
+
+        <Button
+            android:id="@+id/btnDEG"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="DE - Gandhinagar" />
+
+
+        <Button
+            android:id="@+id/btnDEK"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="DE - Kasturiplaza" />
+
+        <Button
+            android:id="@+id/btnDEM"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="DE - MIDC" />
+
+        <Button
+            android:id="@+id/btnDES"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="DE - Shil Phata" />
+
+        <Button
+            android:id="@+id/btnDET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="DE - Thakurli" />
+
+        <Button
+            android:id="@+id/btnDETA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="DE-Tata" />
+
+        <Button
+            android:id="@+id/btnDWK"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="DW - Koper Road" />
+
+        <Button
+            android:id="@+id/btnDWG"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="DW - Gupte Road" />
+
+        <Button
+            android:id="@+id/btnKEL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="KE - Lockgram" />
+
+        <Button
+            android:id="@+id/btnKEK"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="KE - Koleshwadi" />
+
+        <Button
+            android:id="@+id/btnKWK"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="KW - Khadakpad" />
+
+        <Button
+            android:id="@+id/btnKWR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="KW - Rambaug" />
+
+        <Button
+            android:id="@+id/btnKWS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="KW - Station Road" />
+
+        <Button
+            android:id="@+id/btnKWSC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="KW -Shivaji Chowk" />
+
+        <Button
+            android:id="@+id/btnOTH"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Others" />
+
+        <Button
+            android:id="@+id/btnTIT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TITWALA" />
+
+        <Button
+            android:id="@+id/btnIBALL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="I BALL" />
+
+    </LinearLayout>
+</ScrollView>
