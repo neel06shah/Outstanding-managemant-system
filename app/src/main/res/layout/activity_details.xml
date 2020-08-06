@@ -1,6 +1,8 @@
-<RelativeLayout android:layout_width="match_parent"
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
@@ -8,22 +10,62 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
-        <TextView
-            android:id="@+id/total"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingRight="10dp"
-            android:text="TextView"
-            android:textColor="#000"
-            android:textSize="20sp" />
+            android:background="@color/colorPrimaryDark"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bills : "
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="#fff"
+                android:textSize="18dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/bills"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="#FFEB3B"
+                android:textSize="18dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pending Amount : "
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="#fff"
+                android:textSize="18dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/pending"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="#FFEB3B"
+                android:textSize="18dp"
+                android:textStyle="italic" />
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_alignBottom="@+id/total">
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:layout_alignBottom="@+id/total"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/date"
@@ -39,8 +81,12 @@
                 android:id="@+id/bill"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_toStartOf="@+id/pen"
+                android:layout_toLeftOf="@+id/pen"
                 android:layout_toEndOf="@+id/date"
                 android:layout_toRightOf="@+id/date"
                 android:gravity="left"
@@ -50,7 +96,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/pending"
+                android:id="@+id/pen"
                 android:layout_width="61dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="1dp"
@@ -76,7 +122,6 @@
                 android:textStyle="bold" />
         </RelativeLayout>
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listView"
             android:layout_width="match_parent"
@@ -100,21 +145,41 @@
             android:id="@+id/call"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_call_black_24dp"/>
+            android:src="@drawable/ic_call_black_24dp"
+            android:padding="15dp"
+            android:background="@drawable/round_shaped"
+            android:backgroundTint="@android:color/holo_blue_light"/>
 
         <ImageButton
             android:id="@+id/whatsapp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:src="@drawable/ic_whatsapp"/>
+            android:src="@drawable/ic_whatsapp"
+            android:padding="15dp"
+            android:background="@drawable/round_shaped"
+            android:backgroundTint="@android:color/holo_green_dark"/>
 
         <ImageButton
             android:id="@+id/sms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:src="@drawable/ic_message_black_24dp"/>
+            android:src="@drawable/ic_message_black_24dp"
+            android:padding="15dp"
+            android:background="@drawable/round_shaped"
+            android:backgroundTint="@android:color/holo_orange_light"/>
+
+        <ImageButton
+            android:id="@+id/Receipt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/ic_rupee_indian"
+            android:padding="15dp"
+            android:background="@drawable/round_shaped"
+            android:backgroundTint="@android:color/holo_red_light"/>
+
     </LinearLayout>
 
 </RelativeLayout>

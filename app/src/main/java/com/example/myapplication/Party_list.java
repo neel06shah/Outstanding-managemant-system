@@ -1,22 +1,23 @@
 package com.example.myapplication;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.telecom.Call;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -26,9 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.text.DecimalFormat;
 
 public class Party_list extends AppCompatActivity {
 
@@ -37,6 +36,7 @@ public class Party_list extends AppCompatActivity {
     String area;
     ProgressBar progressBar;
     SearchView searchView;
+    TextView bills, pend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +54,36 @@ public class Party_list extends AppCompatActivity {
         list_view.setHasFixedSize(true);
         list_view.setLayoutManager(new LinearLayoutManager(this));
 
+        bills = findViewById(R.id.bills);
+        pend = findViewById(R.id.pending);
+
         databaseReference= FirebaseDatabase.getInstance().getReference().child("workingSheet").child(area);
         databaseReference.keepSynced(true);
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int count = 0;
+                int amount = 0;
+                for(DataSnapshot children : dataSnapshot.getChildren()){
+                    for(DataSnapshot child : children.child("Bills").getChildren()) {
+                        count = count+1;
+                        data data = child.getValue(com.example.myapplication.data.class);
+                        assert data != null;
+                        Long pending = data.getPending();
+                        int pen = pending.intValue();
+                        amount=amount+pen;
+                    }
+                }
+                bills.setText(""+count);
+                pend.setText("\u20b9 "+new DecimalFormat("##,##,###").format(amount));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(Party_list.this, "Please connect internet connection", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         FirebaseRecyclerAdapter<party,partyViewHolder> recyclerAdapter=new FirebaseRecyclerAdapter<party,partyViewHolder>(
@@ -88,25 +116,46 @@ public class Party_list extends AppCompatActivity {
         View mView;
         String name,Area,Contact;
         TextView pend, bills;
-        DatabaseReference reference;
+        DatabaseReference reference,count;
+        int Count = 0;
 
-        public partyViewHolder(View itemView) {
+        public partyViewHolder(final View itemView) {
             super(itemView);
             mView=itemView;
 
             pend = mView.findViewById(R.id.pending);
             bills = mView.findViewById(R.id.bills);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            count = FirebaseDatabase.getInstance().getReference().child("Receipt");
+            count.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(mView.getContext(), Details.class);
-                    i.putExtra("party",name);
-                    i.putExtra("area",Area);
-                    i.putExtra("contact",Contact);
-                    mView.getContext().startActivity(i);
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot child : dataSnapshot.getChildren()) {
+                            Count = Count + 1;
+                        }
+                    }
+
+                    itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent i = new Intent(mView.getContext(), Details.class);
+                            i.putExtra("party",name);
+                            i.putExtra("area",Area);
+                            i.putExtra("contact",Contact);
+                            i.putExtra("count",Count);
+                            mView.getContext().startActivity(i);
+                        }
+                    });
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
                 }
             });
+
         }
 
         public void setParty_name(String party_name) {
@@ -119,20 +168,20 @@ public class Party_list extends AppCompatActivity {
             Area = area;
             reference= FirebaseDatabase.getInstance().getReference().child("workingSheet").child(Area).child(name).child("Bills");
             reference.addValueEventListener(new ValueEventListener() {
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     int count = 0,amount = 0;
                     for(DataSnapshot child : dataSnapshot.getChildren()) {
                         count = count+1;
                         data data = child.getValue(com.example.myapplication.data.class);
+                        assert data != null;
                         Long pending = data.getPending();
                         int pen = pending.intValue();
-
                         amount=amount+pen;
-
-                        bills.setText("Bills : "+count);
-                        pend.setText("Pending : \u20b9"+amount);
                     }
+                    bills.setText(""+count);
+                    pend.setText("\u20b9 "+amount);
                 }
 
                 @Override

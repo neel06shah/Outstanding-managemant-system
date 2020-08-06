@@ -1,132 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:paddingBottom="?attr/actionBarSize">
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btnDEG"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:text="DE - Gandhinagar" />
+            android:background="@color/colorPrimaryDark"
+            android:orientation="horizontal"
+            android:padding="5dp">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bills : "
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="#fff"
+                android:textSize="18dp"
+                android:textStyle="italic" />
 
-        <Button
-            android:id="@+id/btnDEK"
+            <TextView
+                android:id="@+id/bills"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="#FFEB3B"
+                android:textSize="18dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pending Amount : "
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="#fff"
+                android:textSize="18dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/pending"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="#FFEB3B"
+                android:textSize="18dp"
+                android:textStyle="italic" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/listView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:text="DE - Kasturiplaza" />
-
-        <Button
-            android:id="@+id/btnDEM"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:text="DE - MIDC" />
-
-        <Button
-            android:id="@+id/btnDES"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:text="DE - Shil Phata" />
-
-        <Button
-            android:id="@+id/btnDET"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:text="DE - Thakurli" />
-
-        <Button
-            android:id="@+id/btnDETA"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:text="DE-Tata" />
-
-        <Button
-            android:id="@+id/btnDWK"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:text="DW - Koper Road" />
-
-        <Button
-            android:id="@+id/btnDWG"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:text="DW - Gupte Road" />
-
-        <Button
-            android:id="@+id/btnKEL"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:text="KE - Lockgram" />
-
-        <Button
-            android:id="@+id/btnKEK"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:text="KE - Koleshwadi" />
-
-        <Button
-            android:id="@+id/btnKWK"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:text="KW - Khadakpad" />
-
-        <Button
-            android:id="@+id/btnKWR"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="KW - Rambaug" />
-
-        <Button
-            android:id="@+id/btnKWS"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="KW - Station Road" />
-
-        <Button
-            android:id="@+id/btnKWSC"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="KW -Shivaji Chowk" />
-
-        <Button
-            android:id="@+id/btnOTH"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Others" />
-
-        <Button
-            android:id="@+id/btnTIT"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TITWALA" />
-
-        <Button
-            android:id="@+id/btnIBALL"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="I BALL" />
-
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp" />
     </LinearLayout>
-</ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="341dp"></ProgressBar>
+
+</RelativeLayout>

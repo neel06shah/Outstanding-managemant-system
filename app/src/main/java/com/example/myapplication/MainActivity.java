@@ -1,15 +1,35 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnDEG, btnDEK, btnDEM,btnDES,btnDET, btnDETA, btnDWK, btnDWG, btnKEL, btnKEK, btnKWK, btnKWR, btnKWS, btnKWSC, btnOTH, btnTIT, btnIBALL;
+    ListView listView;
+    DatabaseReference reference;
+    ProgressBar progressBar;
+    TextView bills, pend;
+    final ArrayList<String> area = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,182 +37,67 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTitle("Choose your Area");
 
-        btnDEG=findViewById(R.id.btnDEG);
-        btnDEK=findViewById(R.id.btnDEK);
-        btnDEM=findViewById(R.id.btnDEM);
-        btnDES=findViewById(R.id.btnDES);
-        btnDET=findViewById(R.id.btnDET);
-        btnDETA=findViewById(R.id.btnDETA);
-        btnDWK=findViewById(R.id.btnDWK);
-        btnDWG=findViewById(R.id.btnDWG);
-        btnKEL=findViewById(R.id.btnKEL);
-        btnKEK=findViewById(R.id.btnKEK);
-        btnKWK=findViewById(R.id.btnKWK);
-        btnKWR=findViewById(R.id.btnKWR);
-        btnKWS=findViewById(R.id.btnKWS);
-        btnKWSC=findViewById(R.id.btnKWSC);
-        btnOTH=findViewById(R.id.btnOTH);
-        btnTIT=findViewById(R.id.btnTIT);
-        btnIBALL=findViewById(R.id.btnIBALL);
+        progressBar = findViewById(R.id.progressBar);
+        listView = findViewById(R.id.listView);
 
+        pend = findViewById(R.id.pending);
+        bills = findViewById(R.id.bills);
+        reference = FirebaseDatabase.getInstance().getReference().child("workingSheet");
 
-        btnDEG.setOnClickListener(new View.OnClickListener() {
+        reference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint({"DefaultLocale", "SetTextI18n"})
             @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, Party_list.class);
-                i.putExtra("Area","DE - Ghandinagar");
-                startActivity(i);
+            public void onDataChange(@NonNull DataSnapshot datas) {
+                int count = 0;
+                int amount = 0;
+                for(DataSnapshot dataSnapshot : datas.getChildren()) {
+                   for(DataSnapshot children : dataSnapshot.getChildren()){
+                       for(DataSnapshot child : children.child("Bills").getChildren()) {
+                           count = count+1;
+                           data data = child.getValue(com.example.myapplication.data.class);
+                           assert data != null;
+                           Long pending = data.getPending();
+                           int pen = pending.intValue();
+                           amount=amount+pen;
+                       }
+                   }
+                   bills.setText(""+count);
+                   pend.setText("\u20b9 "+new DecimalFormat("##,##,###").format(amount));
+               }
             }
-        });
-        btnDEM.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String area = btnDEM.getText().toString();
-                Intent i = new Intent(MainActivity.this, Party_list.class);
-                i.putExtra("Area",area);
-                startActivity(i);
-            }
-        });
 
-        btnDEK.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, Party_list.class);
-                i.putExtra("Area","DE -  Kasturiplaza");
-                startActivity(i);
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 
-        btnDES.setOnClickListener(new View.OnClickListener() {
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                String area = btnDES.getText().toString();
-                Intent i = new Intent(MainActivity.this, Party_list.class);
-                i.putExtra("Area",area);
-                startActivity(i);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot player : dataSnapshot.getChildren()) {
+                    area.add(player.getKey());
+                }
+                progressBar.setVisibility(View.GONE);
+                ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, area);
+                listView.setAdapter(arrayAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 
-        btnDET.setOnClickListener(new View.OnClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                String area = btnDET.getText().toString();
-                Intent i = new Intent(MainActivity.this, Party_list.class);
-                i.putExtra("Area",area);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selected = area.get(position);
+                Intent i = new Intent(MainActivity.this,Party_list.class);
+                i.putExtra("Area",selected);
                 startActivity(i);
             }
         });
-
-        btnDETA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String area = btnDETA.getText().toString();
-                Intent i = new Intent(MainActivity.this, Party_list.class);
-                i.putExtra("Area",area);
-                startActivity(i);
-            }
-        });
-
-        btnDWK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String area = btnDWK.getText().toString();
-                Intent i = new Intent(MainActivity.this, Party_list.class);
-                i.putExtra("Area",area);
-                startActivity(i);
-            }
-        });
-
-        btnDWG.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String area = btnDWG.getText().toString();
-                Intent i = new Intent(MainActivity.this, Party_list.class);
-                i.putExtra("Area",area);
-                startActivity(i);
-            }
-        });
-
-        btnKEL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String area = btnKEL.getText().toString();
-                Intent i = new Intent(MainActivity.this, Party_list.class);
-                i.putExtra("Area",area);
-                startActivity(i);
-            }
-        });
-
-        btnKEK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String area = btnKEK.getText().toString();
-                Intent i = new Intent(MainActivity.this, Party_list.class);
-                i.putExtra("Area",area);
-                startActivity(i);
-            }
-        });
-
-        btnKWK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String area = btnKWK.getText().toString();
-                Intent i = new Intent(MainActivity.this, Party_list.class);
-                i.putExtra("Area",area);
-                startActivity(i);
-            }
-        });
-
-        btnKWR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String area = btnKWS.getText().toString();
-                Intent i = new Intent(MainActivity.this, Party_list.class);
-                i.putExtra("Area",area);
-                startActivity(i);
-            }
-        });
-
-        btnKWSC.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String area = btnKWSC.getText().toString();
-                Intent i = new Intent(MainActivity.this, Party_list.class);
-                i.putExtra("Area",area);
-                startActivity(i);
-            }
-        });
-
-        btnOTH.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String area = btnOTH.getText().toString();
-                Intent i = new Intent(MainActivity.this, Party_list.class);
-                i.putExtra("Area",area);
-                startActivity(i);
-            }
-        });
-        btnTIT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String area = btnTIT.getText().toString();
-                Intent i = new Intent(MainActivity.this, Party_list.class);
-                i.putExtra("Area",area);
-                startActivity(i);
-            }
-        });
-
-        btnIBALL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String area = btnIBALL.getText().toString();
-                Intent i = new Intent(MainActivity.this, Party_list.class);
-                i.putExtra("Area",area);
-                startActivity(i);
-            }
-        });
-
-
 
     }
 }
