@@ -22,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity2 extends AppCompatActivity {
 
-    DatabaseReference to,from;
+    DatabaseReference to,from,backup,backup_from;
     ImageButton sync,done,report,checking;
     ProgressBar loading;
     LinearLayout buttons;
@@ -89,7 +89,9 @@ public class MainActivity2 extends AppCompatActivity {
 
                                     from= FirebaseDatabase.getInstance().getReference().child("masterSheet");
                                     to=FirebaseDatabase.getInstance().getReference().child("checking");
+                                    backup_from = FirebaseDatabase.getInstance().getReference().child("workingSheet");
 
+                                    backup_from.removeValue();
                                     to.removeValue();
                                     from.addValueEventListener(new ValueEventListener() {
                                         @Override

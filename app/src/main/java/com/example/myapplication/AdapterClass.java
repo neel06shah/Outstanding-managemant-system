@@ -16,7 +16,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class AdapterClass extends RecyclerView.Adapter<AdapterClass.myViewHolder> {
@@ -52,7 +54,7 @@ public class AdapterClass extends RecyclerView.Adapter<AdapterClass.myViewHolder
         String formattedDate = outputFormat.format(Date);
         holder.overdue.setText(formattedDate);
 
-        to = FirebaseDatabase.getInstance().getReference().child("workingSheet");
+        to = FirebaseDatabase.getInstance().getReference();
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,11 +64,20 @@ public class AdapterClass extends RecyclerView.Adapter<AdapterClass.myViewHolder
                 int id = list.get(position).getId().intValue();
                 String area = list.get(position).getArea();
 
-                to.child(area).child(party).child("contact").setValue(contact);
-                to.child(area).child(party).child("party_name").setValue(party);
-                to.child(area).child(party).child("area").setValue(area);
+                to.child("workingSheet").child(area).child(party).child("contact").setValue(contact);
+                to.child("workingSheet").child(area).child(party).child("party_name").setValue(party);
+                to.child("workingSheet").child(area).child(party).child("area").setValue(area);
 
-                to.child(area).child(party).child("Bills").child(String.valueOf(id)).setValue(list.get(position));
+
+                java.util.Date c = Calendar.getInstance().getTime();
+                System.out.println("Current time => " + c);
+
+                SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+                String formattedDate = df.format(c);
+
+                to.child("workingSheet").child(area).child(party).child("Bills").child(String.valueOf(id)).setValue(list.get(position));
+                to.child("Backup").child(formattedDate).push().setValue(list.get(position));
+
                 clear = FirebaseDatabase.getInstance().getReference().child("checking").child(list.get(position).getArea()).child(String.valueOf(list.get(position).getId()));
                 clear.removeValue();
 
