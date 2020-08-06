@@ -736,6 +736,7 @@ public class reportActivity extends AppCompatActivity {
             Toast.makeText(this, "Something wrong: " + e.toString(), Toast.LENGTH_LONG).show();
         }
 
+
         // close the document
         document.close();
         openPdf();// You can open pdf after complete
