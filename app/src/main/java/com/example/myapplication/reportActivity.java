@@ -654,7 +654,7 @@ public class reportActivity extends AppCompatActivity {
                 break;
             case R.id.action_calculator :
                 Intent i = new Intent(reportActivity.this, Calculator.class);
-                i.putExtra("cash",cashTotal.getText().toString().replace("\u20b9 ",""));
+                i.putExtra("cash",cashTotal.getText().toString().replace("\u20b9 ","").replace(",",""));
                 startActivity(i);
                 break;
         }

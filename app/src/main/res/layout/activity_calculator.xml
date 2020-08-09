@@ -101,7 +101,7 @@
 
             <TextView
                 android:id="@+id/A_two3zero"
-                android:layout_width="90dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginRight="0dp"
                 android:gravity="center"
@@ -164,7 +164,7 @@
 
             <TextView
                 android:id="@+id/A_five2zero"
-                android:layout_width="90dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginRight="0dp"
                 android:gravity="center"
@@ -226,7 +226,7 @@
 
             <TextView
                 android:id="@+id/A_two2zero"
-                android:layout_width="90dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginRight="0dp"
                 android:gravity="center"
@@ -289,7 +289,7 @@
 
             <TextView
                 android:id="@+id/A_one2zero"
-                android:layout_width="90dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginRight="0dp"
                 android:gravity="center"
@@ -352,8 +352,8 @@
 
             <TextView
                 android:id="@+id/A_fivezero"
-                android:layout_width="90dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="59dp"
                 android:layout_marginRight="0dp"
                 android:gravity="center"
 
@@ -415,7 +415,7 @@
 
             <TextView
                 android:id="@+id/A_twozero"
-                android:layout_width="90dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginRight="0dp"
                 android:gravity="center"
@@ -478,7 +478,7 @@
 
             <TextView
                 android:id="@+id/A_onezero"
-                android:layout_width="90dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginRight="0dp"
                 android:gravity="center"
@@ -543,7 +543,7 @@
 
             <TextView
                 android:id="@+id/A_one"
-                android:layout_width="90dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginRight="0dp"
                 android:gravity="center"
@@ -599,7 +599,7 @@
 
             <TextView
                 android:id="@+id/actualCash"
-                android:layout_width="90dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginRight="12dp"
                 android:gravity="center"
@@ -649,7 +649,7 @@
 
             <TextView
                 android:id="@+id/diffCash"
-                android:layout_width="90dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginRight="12dp"
                 android:gravity="center"

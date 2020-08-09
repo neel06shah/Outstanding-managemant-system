@@ -32,10 +32,10 @@ public class Calculator extends AppCompatActivity{
         setContentView(R.layout.activity_calculator);
 
         Intent i = getIntent();
-        float cash = i.getFloatExtra("cash",0);
+        String cash = i.getStringExtra("cash");
 
         EditText etotalCash = (EditText) findViewById(R.id.totalcash);
-        etotalCash.setText(""+cash);
+        etotalCash.setText(cash);
 
         etotalCash.addTextChangedListener(new TextWatcher() {
             @Override
