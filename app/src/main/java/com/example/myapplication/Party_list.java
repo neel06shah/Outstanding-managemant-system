@@ -161,7 +161,7 @@ public class Party_list extends AppCompatActivity {
         public void setParty_name(String party_name) {
             name = party_name;
             TextView name = mView.findViewById(R.id.Party_name);
-            name.setText(party_name);
+            name.setText(party_name.replace("_dot_","."));
         }
 
         public void setArea(String area) {

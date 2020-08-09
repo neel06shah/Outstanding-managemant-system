@@ -78,7 +78,8 @@ public class Receipt extends AppCompatActivity {
         id = i.getIntExtra("id",0);
 
         Party_name = findViewById(R.id.Party_name);
-        Party_name.setText(party);
+        assert party != null;
+        Party_name.setText(party.replace("_dot_","."));
 
         reference = FirebaseDatabase.getInstance().getReference().child("Receipt").child(String.valueOf(id)).child("Bills");
         reference.addValueEventListener(new ValueEventListener() {

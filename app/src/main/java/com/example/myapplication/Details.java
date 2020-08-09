@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -10,8 +12,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -30,19 +35,22 @@ import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Details extends AppCompatActivity {
 
     RecyclerView listView;
-    TextView tl,bills;
+    TextView tl,bills,cont;
     int Total = 0;
     int Count = 0;
     DatabaseReference myRef;
     ImageButton call, sms, wapp, Receipt;
-    String d;
+    ArrayList<String> bill;
+    String d="";
     int c;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,9 +62,9 @@ public class Details extends AppCompatActivity {
         final String contact = intent.getStringExtra("contact");
         c = intent.getIntExtra("count",0);
 
-        setTitle(party);
-        assert area != null;
         assert party != null;
+        setTitle(party.replace("_dot_","."));
+        assert area != null;
         myRef= FirebaseDatabase.getInstance().getReference().child("workingSheet").child(area).child(party).child("Bills");
         myRef.keepSynced(true);
 
@@ -67,6 +75,9 @@ public class Details extends AppCompatActivity {
         bills = findViewById(R.id.bills);
         wapp =findViewById(R.id.whatsapp);
         Receipt = findViewById(R.id.Receipt);
+        cont = findViewById(R.id.contact);
+
+        cont.setText("Contact number : "+contact);
 
         Receipt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,20 +92,41 @@ public class Details extends AppCompatActivity {
         });
 
         myRef.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
+            @SuppressLint({"SetTextI18n", "DefaultLocale"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                bill = new ArrayList<>();
                 for(DataSnapshot child : dataSnapshot.getChildren()) {
                     Count = Count+1;
                     data model = child.getValue(data.class);
                     assert model != null;
                     Long t = model.getPending();
+                    String id = model.getRef_no();
+                    String date = model.getDate();
+
+                    @SuppressLint("SimpleDateFormat") SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                    @SuppressLint("SimpleDateFormat") SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
+                    Date Date = null;
+                    try {
+                        Date = inputFormat.parse(date);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    assert Date != null;
+                    String formattedDate = outputFormat.format(Date);
+                    bill.add(formattedDate+"\n"+id+"\n\u20b9"+String.format("%.2f",t));
+
                     int total = t.intValue();
                     Total = Total + total;
+
                 }
 
                 tl.setText("\u20b9 "+new DecimalFormat("##,##,###").format(Total));
                 bills.setText(""+Count);
+
+                for (int i=0;i<bill.size();i++) {
+                    d = d + "\n"+bill.get(i);
+                }
             }
 
             @Override
@@ -115,41 +147,90 @@ public class Details extends AppCompatActivity {
         sms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri = Uri.parse("smsto:"+"+91"+contact);
-                Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
-                intent.putExtra("sms_body", "Dear Customer,\nHope you and your family are safe." +
-                        " This is to inform you  that your outstanding with us is \u20b9"+Total+
-                        " You can send payment by UPI or by direct bank transfer. " +
-                        "Please let us know if you have any questions.\n\n"+"Bill details : "+d+"\n\n"+
-                        "*Total Amount : \u20b9"+Total+".00*\n\n"+"Payment details :\n"+"https://docs.google.com/document/d/1tOwpSb5Q1_qCoorStniVoNlgJ9APhjeS24Thi7CiCmc/edit?usp=sharing"+
-                        "Thanking you,\nImpression Enterprises\nDombivali");
-                startActivity(intent);
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(Details.this);
+                alertDialog.setTitle("Choose contact number");
+                alertDialog.setMessage("Enter contact number on which you want to send the Message");
+
+                final EditText input = new EditText(Details.this);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT);
+                input.setLayoutParams(lp);
+                alertDialog.setView(input);
+                input.setText(contact);
+
+                alertDialog.setPositiveButton("Send",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Uri uri = Uri.parse("smsto:"+"+91"+input.getText().toString());
+                                Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+                                intent.putExtra("sms_body", "Dear Customer,\nHope you and your family are safe." +
+                                        " This is to inform you  that your outstanding with us is \u20b9"+Total+
+                                        " You can send payment by UPI or by direct bank transfer. " +
+                                        "Please let us know if you have any questions.\n\n"+"Bill details : "+d+"\n\n"+
+                                        "*Total Amount : \u20b9"+Total+".00*\n\n"+"Payment details :\n"+"https://docs.google.com/document/d/1tOwpSb5Q1_qCoorStniVoNlgJ9APhjeS24Thi7CiCmc/edit?usp=sharing"+
+                                        "Thanking you,\nImpression Enterprises\nDombivali");
+                                startActivity(intent);
+                            }
+                        });
+
+                alertDialog.setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                alertDialog.show();
             }
         });
 
         wapp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phone = "+91"+contact;
-                String message = "Dear Customer,\nHope you and your family are safe." +
-                        " This is to inform you  that your outstanding with us is \u20b9"+Total+
-                        " You can send payment by UPI or by direct bank transfer. " +
-                        "Please let us know if you have any questions.\n\n"+"Bill details : "+d+"\n\n"+
-                        "*Total Amount : \u20b9"+Total+".00*\n\n"+"Payment details :\n"+"https://docs.google.com/document/d/1tOwpSb5Q1_qCoorStniVoNlgJ9APhjeS24Thi7CiCmc/edit?usp=sharing"+
-                        "\n\nThanking you,\nImpression Enterprises\nDombivali";
-                PackageManager packageManager = getPackageManager();
-                Intent i = new Intent(Intent.ACTION_VIEW);
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(Details.this);
+                alertDialog.setTitle("Choose contact number");
+                alertDialog.setMessage("Enter contact number on which you want to send the Message");
 
-                try {
-                    String url = "https://api.whatsapp.com/send?phone="+ phone +"&text=" + URLEncoder.encode(message, "UTF-8");
-                    i.setPackage("com.whatsapp");
-                    i.setData(Uri.parse(url));
-                    if (i.resolveActivity(packageManager) != null) {
-                        startActivity(i);
-                    }
-                } catch (Exception e){
-                    e.printStackTrace();
-                }
+                final EditText input = new EditText(Details.this);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT);
+                input.setLayoutParams(lp);
+                alertDialog.setView(input);
+                input.setText(contact);
+
+                alertDialog.setPositiveButton("Send",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                String phone = "+91"+input.getText().toString();
+                                String message = "Dear Customer,\nHope you and your family are safe." +
+                                        " This is to inform you  that your outstanding with us is \u20b9"+Total+
+                                        " You can send payment by UPI or by direct bank transfer. " +
+                                        "Please let us know if you have any questions.\n\n"+"Bill details : "+d+"\n\n"+
+                                        "*Total Amount : \u20b9"+Total+".00*\n\n"+"Payment details :\n"+"https://docs.google.com/document/d/1tOwpSb5Q1_qCoorStniVoNlgJ9APhjeS24Thi7CiCmc/edit?usp=sharing"+
+                                        "\n\nThanking you,\nImpression Enterprises\nDombivali";
+                                PackageManager packageManager = getPackageManager();
+                                Intent i = new Intent(Intent.ACTION_VIEW);
+                                try {
+                                    String url = "https://api.whatsapp.com/send?phone="+ phone +"&text=" + URLEncoder.encode(message, "UTF-8");
+                                    i.setPackage("com.whatsapp");
+                                    i.setData(Uri.parse(url));
+                                    if (i.resolveActivity(packageManager) != null) {
+                                        startActivity(i);
+                                    }
+                                } catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+
+                alertDialog.setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                alertDialog.show();
             }
         });
 

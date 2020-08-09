@@ -515,7 +515,7 @@ public class reportActivity extends AppCompatActivity {
             cheque = mView.findViewById(R.id.cheque);
         }
         public void setParty(String party) {
-            receiptParty.setText(party);
+            receiptParty.setText(party.replace("_dot_","."));
         }
 
         @SuppressLint("SetTextI18n")
