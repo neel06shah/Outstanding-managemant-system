@@ -3,7 +3,6 @@ package com.example.myapplication;
 public class party {
     private String contact, party_name,area;
     party() {}
-
     public party(String contact, String party_name, String area) {
         this.contact = contact;
         this.party_name = party_name;
