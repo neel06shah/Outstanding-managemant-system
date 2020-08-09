@@ -49,6 +49,7 @@ public class Details extends AppCompatActivity {
     ArrayList<String> bill;
     String d="";
     int c;
+    Uri uri;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -114,7 +115,7 @@ public class Details extends AppCompatActivity {
                     }
                     assert Date != null;
                     String formattedDate = outputFormat.format(Date);
-                    bill.add(formattedDate+"\n"+id+"\n\u20b9"+String.format("%.2f",t));
+                    bill.add("Date : "+formattedDate+"\nRef no. : "+id+"\nAmount : \u20b9"+t);
 
                     int total = t.intValue();
                     Total = Total + total;
@@ -125,7 +126,7 @@ public class Details extends AppCompatActivity {
                 bills.setText(""+Count);
 
                 for (int i=0;i<bill.size();i++) {
-                    d = d + "\n"+bill.get(i);
+                    d = d + "\n\n"+bill.get(i);
                 }
             }
 
@@ -162,14 +163,25 @@ public class Details extends AppCompatActivity {
                 alertDialog.setPositiveButton("Send",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                String message = "Dear Customer,\nHope you and your family are safe." +
+                                        " This is to inform you  that your outstanding with us is \u20b9"+Total+
+                                        ".00. You can send payment by *UPI or by direct bank transfer*. " +
+                                        "Please let us know if you have any questions.\n\n"+"Bill details : "+d+"\n\n"+
+                                        "Total Amount : \u20b9"+Total+".00\n\n"+"*Payment options :*\n\nUPI Payment :\nName : Impression Enterprises\nNumber : 9323610419\nUPI ID : 9323610419-1@okbizaxis \n\nBank Payment : "+
+                                        "\nBeneficiary Name :\n" +
+                                        "Impression Enterprises\n" +
+                                        "Bank name : \n" +
+                                        "Shamrao Vithal co-op bank ltd.\n" +
+                                        "Branch name : \n" +
+                                        "Rajaji Path- Dombivali east\n" +
+                                        "IFSC code :\n" +
+                                        "SVCB0000182\n" +
+                                        "Account No. :\n" +
+                                        "118204180000050"+
+                                        "\n\nThanking you,\nImpression Enterprises\nDombivali";
                                 Uri uri = Uri.parse("smsto:"+"+91"+input.getText().toString());
                                 Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
-                                intent.putExtra("sms_body", "Dear Customer,\nHope you and your family are safe." +
-                                        " This is to inform you  that your outstanding with us is \u20b9"+Total+
-                                        " You can send payment by UPI or by direct bank transfer. " +
-                                        "Please let us know if you have any questions.\n\n"+"Bill details : "+d+"\n\n"+
-                                        "*Total Amount : \u20b9"+Total+".00*\n\n"+"Payment details :\n"+"https://docs.google.com/document/d/1tOwpSb5Q1_qCoorStniVoNlgJ9APhjeS24Thi7CiCmc/edit?usp=sharing"+
-                                        "Thanking you,\nImpression Enterprises\nDombivali");
+                                intent.putExtra("sms_body", message);
                                 startActivity(intent);
                             }
                         });
@@ -205,9 +217,19 @@ public class Details extends AppCompatActivity {
                                 String phone = "+91"+input.getText().toString();
                                 String message = "Dear Customer,\nHope you and your family are safe." +
                                         " This is to inform you  that your outstanding with us is \u20b9"+Total+
-                                        " You can send payment by UPI or by direct bank transfer. " +
+                                        ".00. You can send payment by *UPI or by direct bank transfer*. " +
                                         "Please let us know if you have any questions.\n\n"+"Bill details : "+d+"\n\n"+
-                                        "*Total Amount : \u20b9"+Total+".00*\n\n"+"Payment details :\n"+"https://docs.google.com/document/d/1tOwpSb5Q1_qCoorStniVoNlgJ9APhjeS24Thi7CiCmc/edit?usp=sharing"+
+                                        "Total Amount : \u20b9"+Total+".00\n\n"+"*Payment options :*\n\nUPI Payment :\nName : Impression Enterprises\nNumber : 9323610419\nUPI ID : 9323610419-1@okbizaxis \n\nBank Payment : "+
+                                        "\nBeneficiary Name :\n" +
+                                        "Impression Enterprises\n" +
+                                        "Bank name : \n" +
+                                        "Shamrao Vithal co-op bank ltd.\n" +
+                                        "Branch name : \n" +
+                                        "Rajaji Path- Dombivali east\n" +
+                                        "IFSC code :\n" +
+                                        "SVCB0000182\n" +
+                                        "Account No. :\n" +
+                                        "118204180000050"+
                                         "\n\nThanking you,\nImpression Enterprises\nDombivali";
                                 PackageManager packageManager = getPackageManager();
                                 Intent i = new Intent(Intent.ACTION_VIEW);
