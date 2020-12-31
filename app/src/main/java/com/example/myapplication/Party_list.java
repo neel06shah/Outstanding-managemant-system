@@ -1,13 +1,20 @@
 package com.example.myapplication;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -27,7 +34,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.net.URLEncoder;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class Party_list extends AppCompatActivity {
 
@@ -37,7 +49,6 @@ public class Party_list extends AppCompatActivity {
     ProgressBar progressBar;
     SearchView searchView;
     TextView bills, pend;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,6 +129,10 @@ public class Party_list extends AppCompatActivity {
         TextView pend, bills;
         DatabaseReference reference,count;
         int Count = 0;
+        ArrayList<String> bill;
+        String d="";
+        Button call , sms, whatsapp;
+        private int Total=0;
 
         public partyViewHolder(final View itemView) {
             super(itemView);
@@ -125,6 +140,9 @@ public class Party_list extends AppCompatActivity {
 
             pend = mView.findViewById(R.id.pending);
             bills = mView.findViewById(R.id.bills);
+            call = mView.findViewById(R.id.call);
+            sms = mView.findViewById(R.id.sms);
+            whatsapp = mView.findViewById(R.id.whatsapp);
 
             count = FirebaseDatabase.getInstance().getReference().child("Receipt");
             count.addValueEventListener(new ValueEventListener() {
@@ -164,6 +182,10 @@ public class Party_list extends AppCompatActivity {
             name.setText(party_name.replace("_dot_","."));
         }
 
+        public void setContact (final String contact) {
+            Contact = contact;
+        }
+
         public void setArea(String area) {
             Area = area;
             reference= FirebaseDatabase.getInstance().getReference().child("workingSheet").child(Area).child(name).child("Bills");
@@ -190,9 +212,169 @@ public class Party_list extends AppCompatActivity {
                 }
             });
 
+            DatabaseReference myRef= FirebaseDatabase.getInstance().getReference().child("workingSheet").child(area).child(name).child("Bills");
+            myRef.addValueEventListener(new ValueEventListener() {
+                @SuppressLint({"SetTextI18n", "DefaultLocale"})
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    bill = new ArrayList<>();
+                    for(DataSnapshot child : dataSnapshot.getChildren()) {
+                        Count = Count+1;
+                        data model = child.getValue(data.class);
+                        assert model != null;
+                        Long t = model.getPending();
+                        String id = model.getRef_no();
+                        String date = model.getDate();
+
+                        @SuppressLint("SimpleDateFormat") SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                        @SuppressLint("SimpleDateFormat") SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
+                        Date Date = null;
+                        try {
+                            Date = inputFormat.parse(date);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        assert Date != null;
+                        String formattedDate = outputFormat.format(Date);
+                        bill.add("Date : "+formattedDate+"\nRef no. : "+id+"\nAmount : \u20b9"+t);
+
+                        int total = t.intValue();
+                        Total = Total + total;
+                    }
+
+                    for (int i=0;i<bill.size();i++) {
+                        d = d.concat("\n\n"+bill.get(i));
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+            //Button Code HERE
+
+            call.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String phone2 = "+91"+Contact;
+                    Intent intent2 = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone2, null));
+                    mView.getContext().startActivity(intent2);
+                }
+            });
+
+            sms.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final AlertDialog.Builder alertDialog = new AlertDialog.Builder(mView.getContext());
+                    alertDialog.setTitle("Choose contact number");
+                    alertDialog.setMessage("Enter contact number on which you want to send the Message");
+
+                    final EditText input = new EditText(mView.getContext());
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.MATCH_PARENT);
+                    input.setLayoutParams(lp);
+                    alertDialog.setView(input);
+                    input.setText(Contact);
+
+                    alertDialog.setPositiveButton("Send",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String message = "Dear Customer,\nHope you and your family are safe." +
+                                            " This is to inform you  that your outstanding with us is \u20b9"+Total+
+                                            ".00. You can send payment by *UPI or by direct bank transfer*. " +
+                                            "Please let us know if you have any questions.\n\n"+"Bill details : "+d+"\n\n"+
+                                            "Total Amount : \u20b9"+Total+".00\n\n"+"*Payment options :*\n\nUPI Payment :\nName : Impression Enterprises\nNumber : 9323610419\n\nBank Payment : "+
+                                            "\nBeneficiary Name :\n" +
+                                            "Impression Enterprises\n" +
+                                            "Bank name : \n" +
+                                            "Shamrao Vithal co-op bank ltd.\n" +
+                                            "Branch name : \n" +
+                                            "Rajaji Path- Dombivali east\n" +
+                                            "IFSC code :\n" +
+                                            "SVCB0000182\n" +
+                                            "Account No. :\n" +
+                                            "118204180000050"+
+                                            "\n\nIgnore if already Paid\n\nThanking you,\nImpression Enterprises\nDombivali";
+                                    Uri uri = Uri.parse("smsto:"+"+91"+input.getText().toString());
+                                    Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+                                    intent.putExtra("sms_body", message);
+                                    mView.getContext().startActivity(intent);
+                                }
+                            });
+
+                    alertDialog.setNegativeButton("Cancel",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                    alertDialog.show();
+                }
+            });
+
+            whatsapp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final AlertDialog.Builder alertDialoge = new AlertDialog.Builder(mView.getContext());
+                    alertDialoge.setTitle("Choose contact number");
+                    alertDialoge.setMessage("Enter contact number on which you want to send the Message");
+
+                    final EditText in = new EditText(mView.getContext());
+                    LinearLayout.LayoutParams lpl = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.MATCH_PARENT);
+                    in.setLayoutParams(lpl);
+                    alertDialoge.setView(in);
+                    in.setText(Contact);
+
+                    alertDialoge.setPositiveButton("Send",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String phone = "+91"+in.getText().toString();
+                                    String message = "Dear Customer,\nHope you and your family are safe." +
+                                            " This is to inform you  that your outstanding with us is \u20b9"+Total+
+                                            ".00. You can send payment by *UPI or by direct bank transfer*. " +
+                                            "Please let us know if you have any questions.\n\n"+"Bill details : "+d+"\n\n"+
+                                            "Total Amount : \u20b9"+Total+".00\n\n"+"*Payment options :*\n\nUPI Payment :\nName : Impression Enterprises\nNumber : 9323610419 \n\nBank Payment : "+
+                                            "\nBeneficiary Name :\n" +
+                                            "Impression Enterprises\n" +
+                                            "Bank name : \n" +
+                                            "Shamrao Vithal co-op bank ltd.\n" +
+                                            "Branch name : \n" +
+                                            "Rajaji Path- Dombivali east\n" +
+                                            "IFSC code :\n" +
+                                            "SVCB0000182\n" +
+                                            "Account No. :\n" +
+                                            "118204180000050"+
+                                            "\n\nIgnore if already Paid\n\nThanking you,\nImpression Enterprises\nDombivali";
+                                    PackageManager packageManager = mView.getContext().getPackageManager();
+                                    Intent i = new Intent(Intent.ACTION_VIEW);
+                                    try {
+                                        String url = "https://api.whatsapp.com/send?phone="+ phone +"&text=" + URLEncoder.encode(message, "UTF-8");
+                                        i.setPackage("com.whatsapp");
+                                        i.setData(Uri.parse(url));
+                                        if (i.resolveActivity(packageManager) != null) {
+                                            mView.getContext().startActivity(i);
+                                        }
+                                    } catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+
+                    alertDialoge.setNegativeButton("Cancel",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                    alertDialoge.show();
+
+                }
+            });
         }
-        public void setContact (String contact) {
-            Contact = contact;
-        }
+
     }
 }

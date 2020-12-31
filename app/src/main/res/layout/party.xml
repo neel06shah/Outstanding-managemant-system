@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:background="#fff"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical">>
 
             <TextView
                 android:id="@+id/Party_name"
@@ -26,8 +26,8 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="Party_name"
-                android:textColor="#000000"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -43,8 +43,8 @@
                     android:text="Bills : "
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="#000"
-                    android:textStyle="italic"
-                    android:textSize="18dp" />
+                    android:textSize="18dp"
+                    android:textStyle="italic" />
 
                 <TextView
                     android:id="@+id/bills"
@@ -54,29 +54,71 @@
                     android:text="TextView"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="#0000ff"
-                    android:textStyle="italic"
-                    android:textSize="18dp" />
+                    android:textSize="18dp"
+                    android:textStyle="italic" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:text="Pending Amount : "
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="#000"
-                    android:textStyle="italic"
-                    android:textSize="18dp" />
+                    android:textSize="18dp"
+                    android:textStyle="italic" />
 
                 <TextView
                     android:id="@+id/pending"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:text="TextView"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="#ff0000"
-                    android:textStyle="italic"
-                    android:textSize="18dp" />
+                    android:textSize="18dp"
+                    android:textStyle="italic" />
+
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <Button
+                    android:id="@+id/call"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:layout_margin="10dp"
+                    android:textColor="#3366ff"
+                    android:text="Call"
+                    android:textStyle="bold"/>
+
+                <Button
+                    android:id="@+id/sms"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:layout_margin="10dp"
+                    android:text="SMS"
+                    android:textColor="#ffa100"
+                    android:textStyle="bold"/>
+
+                <Button
+                    android:id="@+id/whatsapp"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:layout_margin="10dp"
+                    android:text="whatsapp"
+                    android:textColor="#53d129"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
         </LinearLayout>
+
 </androidx.cardview.widget.CardView>

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -17,11 +18,13 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -36,6 +39,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -62,7 +66,7 @@ import java.util.Objects;
 
 public class reportActivity extends AppCompatActivity {
 
-    LinearLayout cash, cheque, upi, bank, llScroll;
+    LinearLayout cash, cheque, upi, bank,llScroll;
     RecyclerView cashList, chequeList, upiList, bankList;
     TextView cashTotal,chequeTotal,upiTotal,bankTotal, finCash, finCheque, finUPI, finBank,finTotal;
     Query cashRef, chqRef, upiRef, bankRef;
@@ -79,6 +83,7 @@ public class reportActivity extends AppCompatActivity {
     private String imagesUri;
     private Bitmap b;
     private File filePath;
+    int mYear,mMonth,mDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,100 +129,6 @@ public class reportActivity extends AppCompatActivity {
         bankRef = FirebaseDatabase.getInstance().getReference().child("Receipt").orderByChild("date_type").equalTo(formattedDate+"_Bank");
         getData(cashRef, chqRef, upiRef, bankRef);
 
-        cashRef.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                cashT = 0;
-                if(dataSnapshot.exists()) {
-                    for (DataSnapshot child : dataSnapshot.getChildren()) {
-                        float t = Float.parseFloat(Objects.requireNonNull(child.child("Amount").getValue(String.class)));
-                        cashT += t;
-                    }
-                    cashTotal.setText("\u20b9 "+new DecimalFormat("##,##,###").format(cashT));
-                    finCash.setText("\u20b9 "+new DecimalFormat("##,##,###").format(cashT));
-                    total += cashT;
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        chqRef.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                chequeT = 0;
-                if(dataSnapshot.exists()) {
-                    for (DataSnapshot child : dataSnapshot.getChildren()) {
-                        float t = Float.parseFloat(Objects.requireNonNull(child.child("Amount").getValue(String.class)));
-                        chequeT += t;
-                    }
-                    chequeTotal.setText("\u20b9 "+new DecimalFormat("##,##,###").format(chequeT));
-                    finCheque.setText("\u20b9 "+new DecimalFormat("##,##,###").format(chequeT));
-                    total+=chequeT;
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        upiRef.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                upiT = 0;
-                if(dataSnapshot.exists()) {
-                    for (DataSnapshot child : dataSnapshot.getChildren()) {
-                        float t = Float.parseFloat(Objects.requireNonNull(child.child("Amount").getValue(String.class)));
-                        upiT += t;
-                    }
-                    upiTotal.setText("\u20b9 "+new DecimalFormat("##,##,###").format(upiT));
-                    finUPI.setText("\u20b9 "+new DecimalFormat("##,##,###").format(upiT));
-                    total+=upiT;
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        bankRef.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                bankT = 0;
-                if(dataSnapshot.exists()) {
-                    for (DataSnapshot child : dataSnapshot.getChildren()) {
-                        float t = Float.parseFloat(Objects.requireNonNull(child.child("Amount").getValue(String.class)));
-                        bankT += t;
-                    }
-                    bankTotal.setText("\u20b9 "+new DecimalFormat("##,##,###").format(bankT));
-                    finBank.setText("\u20b9 "+new DecimalFormat("##,##,###").format(bankT));
-                    total += bankT;
-                }
-                finTotal.setText("\u20b9 "+new DecimalFormat("##,##,###").format(total));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
         Date.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -233,101 +144,6 @@ public class reportActivity extends AppCompatActivity {
                     upiRef = FirebaseDatabase.getInstance().getReference().child("Receipt").orderByChild("date_type").equalTo(formattedDate+"_Online UPI");
                     bankRef = FirebaseDatabase.getInstance().getReference().child("Receipt").orderByChild("date_type").equalTo(formattedDate+"_Bank");
                     getData(cashRef, chqRef, upiRef, bankRef);
-
-                    cashRef.addValueEventListener(new ValueEventListener() {
-                        @SuppressLint("SetTextI18n")
-                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            cashT = 0;
-                            if(dataSnapshot.exists()) {
-                                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                    float t = Float.parseFloat(Objects.requireNonNull(child.child("Amount").getValue(String.class)));
-                                    cashT += t;
-                                }
-                                cashTotal.setText("\u20b9 "+new DecimalFormat("##,##,###").format(cashT));
-                                finCash.setText("\u20b9 "+new DecimalFormat("##,##,###").format(cashT));
-                                total += cashT;
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-
-                    chqRef.addValueEventListener(new ValueEventListener() {
-                        @SuppressLint("SetTextI18n")
-                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            chequeT = 0;
-                            if(dataSnapshot.exists()) {
-                                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                    float t = Float.parseFloat(Objects.requireNonNull(child.child("Amount").getValue(String.class)));
-                                    chequeT += t;
-                                }
-                                chequeTotal.setText("\u20b9 "+new DecimalFormat("##,##,###").format(chequeT));
-                                finCheque.setText("\u20b9 "+new DecimalFormat("##,##,###").format(chequeT));
-                                total+=chequeT;
-                            }
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-
-                    upiRef.addValueEventListener(new ValueEventListener() {
-                        @SuppressLint("SetTextI18n")
-                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            upiT = 0;
-                            if(dataSnapshot.exists()) {
-                                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                    float t = Float.parseFloat(Objects.requireNonNull(child.child("Amount").getValue(String.class)));
-                                    upiT += t;
-                                }
-                                upiTotal.setText("\u20b9 "+new DecimalFormat("##,##,###").format(upiT));
-                                finUPI.setText("\u20b9 "+new DecimalFormat("##,##,###").format(upiT));
-                                total+=upiT;
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-
-                    bankRef.addValueEventListener(new ValueEventListener() {
-                        @SuppressLint("SetTextI18n")
-                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            bankT = 0;
-                            if(dataSnapshot.exists()) {
-                                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                    float t = Float.parseFloat(Objects.requireNonNull(child.child("Amount").getValue(String.class)));
-                                    bankT += t;
-                                }
-                                bankTotal.setText("\u20b9 "+new DecimalFormat("##,##,###").format(bankT));
-                                total += bankT;
-                                finBank.setText("\u20b9 "+new DecimalFormat("##,##,###").format(bankT));
-                            }
-                            finTotal.setText("\u20b9 "+new DecimalFormat("##,##,###").format(total));
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-
                 }
             }
 
@@ -340,8 +156,26 @@ public class reportActivity extends AppCompatActivity {
         cal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment dFragment = new DatePickerFragment();
-                dFragment.show(getSupportFragmentManager(), "Date Picker");
+                Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(reportActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTimeInMillis(0);
+                        cal.set(year, month, dayOfMonth, 0, 0, 0);
+                        Date chosenDate = cal.getTime();
+
+                        // Format the date using style medium and UK locale
+                        @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                        String formattedDate = df.format(chosenDate);
+                        // Display the formatted date
+                        Date.setText(formattedDate);
+                    }
+                },mYear,mMonth,mDay);
+                datePickerDialog.show();
             }
         });
         cashList.setLayoutManager(new LinearLayoutManager(this));
@@ -352,6 +186,11 @@ public class reportActivity extends AppCompatActivity {
 
     private void getData(final Query cashRef, final Query chqRef, final Query upiRef, final Query bankRef) {
         //Cash List
+        finTotal.setText("0");
+        finCash.setText("0");
+        finCheque.setText("0");
+        finUPI.setText("0");
+        finBank.setText("0");
         cashRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -494,6 +333,103 @@ public class reportActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+
+        cashRef.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                cashT = 0;
+                if(dataSnapshot.exists()) {
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        float t = Float.parseFloat(Objects.requireNonNull(child.child("Amount").getValue(String.class)));
+                        cashT += t;
+                    }
+                    cashTotal.setText("\u20b9 "+new DecimalFormat("##,##,###").format(cashT));
+                    finCash.setText(new DecimalFormat("##,##,###").format(cashT));
+                }
+                total += cashT;
+                finTotal.setText("\u20b9 "+new DecimalFormat("##,##,###").format(total));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        chqRef.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                chequeT = 0;
+                if(dataSnapshot.exists()) {
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        float t = Float.parseFloat(Objects.requireNonNull(child.child("Amount").getValue(String.class)));
+                        chequeT += t;
+                    }
+                    chequeTotal.setText("\u20b9 "+new DecimalFormat("##,##,###").format(chequeT));
+                    finCheque.setText(new DecimalFormat("##,##,###").format(chequeT));
+                }
+                total+=chequeT;
+                finTotal.setText("\u20b9 "+new DecimalFormat("##,##,###").format(total));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        upiRef.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                upiT = 0;
+                if(dataSnapshot.exists()) {
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        float t = Float.parseFloat(Objects.requireNonNull(child.child("Amount").getValue(String.class)));
+                        upiT += t;
+                    }
+                    upiTotal.setText("\u20b9 "+new DecimalFormat("##,##,###").format(upiT));
+                    finUPI.setText(new DecimalFormat("##,##,###").format(upiT));
+                }
+                total+=upiT;
+                finTotal.setText("\u20b9 "+new DecimalFormat("##,##,###").format(total));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        bankRef.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                bankT = 0;
+                if(dataSnapshot.exists()) {
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        float t = Float.parseFloat(Objects.requireNonNull(child.child("Amount").getValue(String.class)));
+                        bankT += t;
+                    }
+                    bankTotal.setText("\u20b9 "+new DecimalFormat("##,##,###").format(bankT));
+                    finBank.setText(new DecimalFormat("##,##,###").format(bankT));
+                }
+                total += bankT;
+                finTotal.setText("\u20b9 "+new DecimalFormat("##,##,###").format(total));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     public static class receiptViewHolder extends RecyclerView.ViewHolder {
@@ -608,37 +544,6 @@ public class reportActivity extends AppCompatActivity {
         }
     }
 
-    public static class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
-
-        @NonNull
-        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState){
-            final Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-            return new DatePickerDialog(Objects.requireNonNull(getActivity()),
-                    AlertDialog.THEME_HOLO_LIGHT, this,year,month,day);
-        }
-
-        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-        public void onDateSet(DatePicker view, int year, int month, int day){
-            EditText tv = Objects.requireNonNull(getActivity()).findViewById(R.id.Date);
-            Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(0);
-            cal.set(year, month, day, 0, 0, 0);
-            Date chosenDate = cal.getTime();
-
-            // Format the date using style medium and UK locale
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-            String formattedDate = df.format(chosenDate);
-            // Display the formatted date
-            tv.setText(formattedDate);
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.report_menu, menu);
@@ -671,10 +576,8 @@ public class reportActivity extends AppCompatActivity {
         path = folder.getAbsolutePath();
         path = path + "/" + Date.getText().toString() + ".pdf";// path where pdf will be stored
 
-        View u = findViewById(R.id.llScroll);
-        LinearLayout z = (LinearLayout) findViewById(R.id.llScroll); // parent view
-        int totalHeight = z.getChildAt(0).getHeight();// parent view height
-        int totalWidth = z.getChildAt(0).getWidth();// parent view width
+        int totalHeight = (int)llScroll.getHeight();// parent view height
+        int totalWidth = (int)llScroll.getWidth();// parent view width
 
         //Save bitmap to  below path
         String extr = Environment.getExternalStorageDirectory() + "/Report/";
@@ -685,7 +588,7 @@ public class reportActivity extends AppCompatActivity {
         myPath = new File(extr, fileName);
         imagesUri = myPath.getPath();
         FileOutputStream fos = null;
-        b = getBitmapFromView(u, totalHeight, totalWidth);
+        b = getBitmapFromView(llScroll, totalHeight, totalWidth);
 
         try {
             fos = new FileOutputStream(myPath);
@@ -716,7 +619,6 @@ public class reportActivity extends AppCompatActivity {
     }
 
     private void createPdf() {
-
         PdfDocument document = new PdfDocument();
         PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(b.getWidth(), b.getHeight(), 1).create();
         PdfDocument.Page page = document.startPage(pageInfo);

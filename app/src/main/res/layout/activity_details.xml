@@ -1,13 +1,12 @@
-<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+<androidx.core.widget.NestedScrollView xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
@@ -92,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
-                android:layout_marginLeft="0dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginEnd="0dp"
                 android:layout_marginRight="0dp"
                 android:layout_toStartOf="@+id/pen"
@@ -127,69 +126,175 @@
                 android:layout_marginEnd="1dp"
                 android:layout_marginRight="10dp"
                 android:gravity="right"
-                android:text="OverDue"
+                android:text="Select"
                 android:textColor="#000"
                 android:textStyle="bold" />
         </RelativeLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/listView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:padding="5dp"
+                android:textColor="#000" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/listView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="3dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:background="@color/colorPrimary"
+            android:padding="5dp"
+            android:text=" Receipt Type"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:hint="Amount"
+                android:inputType="number"
+                android:textStyle="bold"
+                android:textColor="#000" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <RadioGroup
+            android:id="@+id/rdGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <RadioButton
+                android:id="@+id/rdCash"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:text="CASH " />
+
+            <RadioButton
+                android:id="@+id/rdCheque"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="CHEQUE " />
+
+            <RadioButton
+                android:id="@+id/rdOnlineUPI"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="UPI" />
+
+            <RadioButton
+                android:id="@+id/rdOnlineBank"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="IMPS,RTGS" />
+
+
+        </RadioGroup>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp">
+            <EditText
+                android:id="@+id/etChequeDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Cheque date (DD/MM/YYYY)"
+                android:inputType="date"
+                android:visibility="gone" />
+
+            <ImageButton
+                android:id="@+id/date2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_date_range_black_24dp"
+                android:background="@null"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/spBank"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:visibility="gone"
+            android:hint="Bank name"
+            android:inputType="textCapCharacters"/>
+
+        <EditText
+            android:id="@+id/etChequeBranch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:hint="Bank Branch"
+            android:inputType="text"
+            android:visibility="gone" />
+
+
+        <EditText
+            android:id="@+id/etChequeNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:hint="Cheque number"
+            android:inputType="number"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="100dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:text="Submit"
+            android:textAllCaps="false"
+            android:textColor="#FFF"
+            android:textSize="20sp" />
 
 
     </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
-
-        <ImageButton
-            android:id="@+id/call"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_call_black_24dp"
-            android:padding="15dp"
-            android:background="@drawable/round_shaped"
-            android:backgroundTint="@android:color/holo_blue_light"/>
-
-        <ImageButton
-            android:id="@+id/whatsapp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:src="@drawable/ic_whatsapp"
-            android:padding="15dp"
-            android:background="@drawable/round_shaped"
-            android:backgroundTint="@android:color/holo_green_dark"/>
-
-        <ImageButton
-            android:id="@+id/sms"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:src="@drawable/ic_message_black_24dp"
-            android:padding="15dp"
-            android:background="@drawable/round_shaped"
-            android:backgroundTint="@android:color/holo_orange_light"/>
-
-        <ImageButton
-            android:id="@+id/Receipt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:src="@drawable/ic_rupee_indian"
-            android:padding="15dp"
-            android:background="@drawable/round_shaped"
-            android:backgroundTint="@android:color/holo_red_light"/>
-
-    </LinearLayout>
-
-</RelativeLayout>
+</androidx.core.widget.NestedScrollView>

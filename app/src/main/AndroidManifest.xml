@@ -30,10 +30,7 @@
         <activity
             android:name=".reportActivity"
             android:label="@string/title_activity_report" />
-        <activity
-            android:name=".Calculator"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Receipt" />
+        <activity android:name=".Calculator"/>
         <activity android:name=".Details" />
         <activity android:name=".Party_list" />
         <activity android:name=".MainActivity" />

@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
     android:paddingBottom="10dp"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
@@ -33,7 +32,7 @@
             <EditText
 
                 android:id="@+id/totalcash"
-                android:layout_width="129dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:inputType="number"
@@ -62,7 +61,7 @@
                 android:gravity="center|right"
                 android:text="  \u20B9 2000"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
             <TextView
@@ -96,7 +95,7 @@
 
                 android:text="="
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
             <TextView
@@ -108,7 +107,7 @@
 
                 android:text="0"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
         </LinearLayout>
@@ -125,7 +124,7 @@
                 android:gravity="center|right"
                 android:text="  \u20B9 500"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
 
@@ -137,7 +136,7 @@
 
                 android:text="X"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
             <EditText
@@ -156,10 +155,9 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="0dp"
                 android:gravity="center"
-
                 android:text="="
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
             <TextView
@@ -171,7 +169,7 @@
 
                 android:text="0"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
         </LinearLayout>
@@ -188,7 +186,7 @@
                 android:gravity="center|right"
                 android:text="  \u20B9 200"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
             <TextView
@@ -199,7 +197,7 @@
 
                 android:text="X"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
             <EditText
@@ -221,7 +219,7 @@
 
                 android:text="="
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
             <TextView
@@ -233,7 +231,7 @@
 
                 android:text="0"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
         </LinearLayout>
@@ -250,7 +248,7 @@
                 android:gravity="center|right"
                 android:text="  \u20B9 100"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
 
@@ -262,7 +260,7 @@
 
                 android:text="X"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
             <EditText
@@ -284,7 +282,7 @@
 
                 android:text="="
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
             <TextView
@@ -296,7 +294,7 @@
 
                 android:text="0"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
         </LinearLayout>
@@ -313,7 +311,7 @@
                 android:gravity="center|right"
                 android:text="  \u20B9 50"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
 
@@ -325,7 +323,7 @@
 
                 android:text="X"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
             <EditText
@@ -347,7 +345,7 @@
 
                 android:text="="
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
             <TextView
@@ -359,7 +357,7 @@
 
                 android:text="0"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
         </LinearLayout>
@@ -376,7 +374,7 @@
                 android:gravity="center|right"
                 android:text="  \u20B9 20"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
 
@@ -388,7 +386,7 @@
 
                 android:text="X"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
             <EditText
@@ -410,7 +408,7 @@
 
                 android:text="="
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
             <TextView
@@ -422,7 +420,7 @@
 
                 android:text="0"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
         </LinearLayout>
@@ -439,7 +437,7 @@
                 android:gravity="center|right"
                 android:text="  \u20B9 10"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
 
@@ -451,7 +449,7 @@
 
                 android:text="X"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
             <EditText
@@ -473,7 +471,7 @@
 
                 android:text="="
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
             <TextView
@@ -485,7 +483,7 @@
 
                 android:text="0"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
 
@@ -504,7 +502,7 @@
                 android:gravity="center|right"
                 android:text="  \u20B9 1"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
 
@@ -516,7 +514,7 @@
 
                 android:text="X"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
             <EditText
@@ -538,7 +536,7 @@
 
                 android:text="="
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
             <TextView
@@ -550,7 +548,7 @@
 
                 android:text="0"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
 
@@ -582,7 +580,7 @@
                 android:gravity="center"
                 android:text="total amount"
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal|bold" />
 
 
@@ -594,7 +592,7 @@
 
                 android:text="="
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
             <TextView
@@ -604,7 +602,7 @@
                 android:layout_marginRight="12dp"
                 android:gravity="center"
                 android:text="0"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -644,7 +642,7 @@
 
                 android:text="="
                 android:textAllCaps="true"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="normal" />
 
             <TextView
@@ -655,7 +653,7 @@
                 android:gravity="center"
                 android:text="0"
                 android:textColor="#F44336"
-                android:textSize="22dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
 

@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Party_Name"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:fontFamily="sans-serif-medium"
                 tools:targetApi="jelly_bean" />
 
@@ -32,7 +32,7 @@
                 android:id="@+id/receiptAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:fontFamily="sans-serif-medium"
                 android:text="\u20b9 2095" />
         </LinearLayout>
@@ -57,7 +57,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
                 android:text="Cheque Details"
-                android:textSize="20sp" />
+                android:layout_marginLeft="20dp"
+                android:textSize="12sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -70,22 +71,27 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="No. : 123456"
+                    android:layout_marginLeft="20dp"
                     android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/receiptChqDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="TextView"
-                    android:textSize="18sp" />
+
             </LinearLayout>
 
+
+            <TextView
+                android:id="@+id/receiptChqDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:layout_marginLeft="20dp"
+                android:textSize="18sp" />
             <TextView
                 android:id="@+id/receiptChqBank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"
+                android:layout_marginLeft="20dp"
                 android:textSize="18sp" />
 
             <TextView
@@ -93,7 +99,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"
+                android:layout_marginLeft="20dp"
                 android:textSize="18sp" />
+
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
