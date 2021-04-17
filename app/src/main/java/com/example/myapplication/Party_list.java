@@ -281,8 +281,8 @@ public class Party_list extends AppCompatActivity {
                     alertDialog.setPositiveButton("Send",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    String message = "Dear Customer,\nHope you and your family are safe." +
-                                            " This is to inform you  that your outstanding with us is \u20b9"+Total+
+                                    String message = "Dear Customer, \n"+name+",\n\nHope everything is fine at your end considering the present Covid 19 situation. Take care of yourself and your family" +
+                                            "\n\nThis is to inform you  that your outstanding with us is \u20b9"+Total+
                                             ".00. You can send payment by *UPI or by direct bank transfer*. " +
                                             "Please let us know if you have any questions.\n\n"+"Bill details : "+d+"\n\n"+
                                             "Total Amount : \u20b9"+Total+".00\n\n"+"*Payment options :*\n\nUPI Payment :\nName : Impression Enterprises\nNumber : 9323610419\n\nBank Payment : "+
@@ -333,8 +333,8 @@ public class Party_list extends AppCompatActivity {
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     String phone = "+91"+in.getText().toString();
-                                    String message = "Dear Customer,\nHope you and your family are safe." +
-                                            " This is to inform you  that your outstanding with us is \u20b9"+Total+
+                                    String message = "Dear Customer, \n"+name+",\n\nHope everything is fine at your end considering the present Covid 19 situation. Take care of yourself and your family" +
+                                            "\n\nThis is to inform you  that your outstanding with us is \u20b9"+Total+
                                             ".00. You can send payment by *UPI or by direct bank transfer*. " +
                                             "Please let us know if you have any questions.\n\n"+"Bill details : "+d+"\n\n"+
                                             "Total Amount : \u20b9"+Total+".00\n\n"+"*Payment options :*\n\nUPI Payment :\nName : Impression Enterprises\nNumber : 9323610419 \n\nBank Payment : "+
