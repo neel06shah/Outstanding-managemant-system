@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.myapplication">
+    package="com.example.kanchancollection">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -19,21 +19,19 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="q">
-        <activity android:name=".MainActivity2">
+        <activity android:name="com.example.kanchancollection.views.SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".checkingList" />
-        <activity android:name=".checkingActivity" />
         <activity
-            android:name=".reportActivity"
+            android:name="com.example.kanchancollection.views.reportActivity"
             android:label="@string/title_activity_report" />
-        <activity android:name=".Calculator"/>
-        <activity android:name=".Details" />
-        <activity android:name=".Party_list" />
-        <activity android:name=".MainActivity" />
+        <activity android:name="com.example.kanchancollection.views.PartyDetailsActivity" />
+        <activity android:name="com.example.kanchancollection.views.PartyListActivity" />
+        <activity android:name="com.example.kanchancollection.views.MainActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

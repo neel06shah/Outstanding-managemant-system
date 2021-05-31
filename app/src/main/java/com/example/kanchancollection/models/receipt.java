@@ -1,10 +1,10 @@
-package com.example.myapplication;
+package com.example.kanchancollection.models;
 
-public class receiptList {
+public class receipt {
     private String Party,Type,Amount,ChequeNo,ChequeDate,Bank,date_type,Date,id,ChequeBranch;
-    receiptList(){}
+    receipt(){}
 
-    public receiptList(String party, String type, String amount, String chequeNo, String chequeDate, String bank, String date_type, String date, String id, String chequeBranch) {
+    public receipt(String party, String type, String amount, String chequeNo, String chequeDate, String bank, String date_type, String date, String id, String chequeBranch) {
         Party = party;
         Type = type;
         Amount = amount;

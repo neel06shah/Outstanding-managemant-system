@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.kanchancollection.views;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,11 +9,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.kanchancollection.R;
+import com.example.kanchancollection.models.data;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,7 +22,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,7 +45,10 @@ public class MainActivity extends AppCompatActivity {
 
         pend = findViewById(R.id.pending);
         bills = findViewById(R.id.bills);
-        reference = FirebaseDatabase.getInstance().getReference().child("workingSheet");
+        Calendar calendar = Calendar.getInstance();
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+        String date = dateFormat.format(calendar.getTime());
+        reference = FirebaseDatabase.getInstance().getReference().child("workingSheet").child(date);
 
         reference.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"DefaultLocale", "SetTextI18n"})
@@ -54,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                    for(DataSnapshot children : dataSnapshot.getChildren()){
                        for(DataSnapshot child : children.child("Bills").getChildren()) {
                            count = count+1;
-                           data data = child.getValue(com.example.myapplication.data.class);
+                           data data = child.getValue(com.example.kanchancollection.models.data.class);
                            assert data != null;
                            Long pending = data.getPending();
                            int pen = pending.intValue();
@@ -93,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String selected = area.get(position);
-                Intent i = new Intent(MainActivity.this,Party_list.class);
+                Intent i = new Intent(MainActivity.this, PartyListActivity.class);
                 i.putExtra("Area",selected);
                 startActivity(i);
             }

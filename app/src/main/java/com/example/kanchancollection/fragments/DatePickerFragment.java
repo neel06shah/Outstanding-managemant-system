@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.kanchancollection.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

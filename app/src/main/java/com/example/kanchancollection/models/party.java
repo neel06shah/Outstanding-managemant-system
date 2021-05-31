@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.kanchancollection.models;
 
 public class party {
     private String contact, party_name,area;

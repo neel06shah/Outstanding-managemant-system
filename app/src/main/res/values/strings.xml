@@ -1,14 +1,5 @@
 <resources>
     <string name="app_name">Collection</string>
 
-    <array name="Banks">
-        <item>Select Person</item>
-        <item>Rutik</item>
-        <item>Vansh</item>
-        <item>Swapnil</item>
-        <item>Other</item>
-    </array>
     <string name="title_activity_report">reportActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
 </resources>

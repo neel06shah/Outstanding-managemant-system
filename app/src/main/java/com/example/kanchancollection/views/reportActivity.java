@@ -1,10 +1,7 @@
-package com.example.myapplication;
+package com.example.kanchancollection.views;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -18,13 +15,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -39,11 +33,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
-import androidx.core.widget.NestedScrollView;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.kanchancollection.R;
+import com.example.kanchancollection.models.data;
+import com.example.kanchancollection.models.receipt;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -196,13 +191,13 @@ public class reportActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()) {
                     cash.setVisibility(View.VISIBLE);
-                    final FirebaseRecyclerAdapter<receiptList, receiptViewHolder> recyclerAdapter=new FirebaseRecyclerAdapter<receiptList, receiptViewHolder>(
-                            receiptList.class,
-                            R.layout.receipt_item,
+                    final FirebaseRecyclerAdapter<receipt, receiptViewHolder> recyclerAdapter=new FirebaseRecyclerAdapter<receipt, receiptViewHolder>(
+                            receipt.class,
+                            R.layout.receipt_view_holder,
                             receiptViewHolder.class,
                             cashRef) {
                         @Override
-                        protected void populateViewHolder( receiptViewHolder viewHolder, receiptList model, int position ) {
+                        protected void populateViewHolder(receiptViewHolder viewHolder, receipt model, int position ) {
                             viewHolder.setParty(model.getParty());
                             viewHolder.setAmount(model.getAmount());
                             viewHolder.setId(model.getId());
@@ -232,13 +227,13 @@ public class reportActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()) {
                     cheque.setVisibility(View.VISIBLE);
-                    final FirebaseRecyclerAdapter<receiptList, receiptViewHolder> recycler=new FirebaseRecyclerAdapter<receiptList, receiptViewHolder>(
-                            receiptList.class,
-                            R.layout.receipt_item,
+                    final FirebaseRecyclerAdapter<receipt, receiptViewHolder> recycler=new FirebaseRecyclerAdapter<receipt, receiptViewHolder>(
+                            receipt.class,
+                            R.layout.receipt_view_holder,
                             receiptViewHolder.class,
                             chqRef) {
                         @Override
-                        protected void populateViewHolder( receiptViewHolder viewHolder, receiptList model, int position ) {
+                        protected void populateViewHolder(receiptViewHolder viewHolder, receipt model, int position ) {
                             viewHolder.setParty(model.getParty());
                             viewHolder.setAmount(model.getAmount());
                             viewHolder.setId(model.getId());
@@ -268,13 +263,13 @@ public class reportActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()) {
                     upi.setVisibility(View.VISIBLE);
-                    final FirebaseRecyclerAdapter<receiptList, receiptViewHolder> recyclerAdap=new FirebaseRecyclerAdapter<receiptList, receiptViewHolder>(
-                            receiptList.class,
-                            R.layout.receipt_item,
+                    final FirebaseRecyclerAdapter<receipt, receiptViewHolder> recyclerAdap=new FirebaseRecyclerAdapter<receipt, receiptViewHolder>(
+                            receipt.class,
+                            R.layout.receipt_view_holder,
                             receiptViewHolder.class,
                             upiRef) {
                         @Override
-                        protected void populateViewHolder( receiptViewHolder viewHolder, receiptList model, int position ) {
+                        protected void populateViewHolder(receiptViewHolder viewHolder, receipt model, int position ) {
                             viewHolder.setParty(model.getParty());
                             viewHolder.setAmount(model.getAmount());
                             viewHolder.setId(model.getId());
@@ -305,13 +300,13 @@ public class reportActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()) {
                     bank.setVisibility(View.VISIBLE);
-                    final FirebaseRecyclerAdapter<receiptList, receiptViewHolder> Adapter=new FirebaseRecyclerAdapter<receiptList, receiptViewHolder>(
-                            receiptList.class,
-                            R.layout.receipt_item,
+                    final FirebaseRecyclerAdapter<receipt, receiptViewHolder> Adapter=new FirebaseRecyclerAdapter<receipt, receiptViewHolder>(
+                            receipt.class,
+                            R.layout.receipt_view_holder,
                             receiptViewHolder.class,
                             bankRef) {
                         @Override
-                        protected void populateViewHolder( receiptViewHolder viewHolder, receiptList model, int position ) {
+                        protected void populateViewHolder(receiptViewHolder viewHolder, receipt model, int position ) {
                             viewHolder.setParty(model.getParty());
                             viewHolder.setAmount(model.getAmount());
                             viewHolder.setId(model.getId());
@@ -501,7 +496,7 @@ public class reportActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     list = new ArrayList<>();
                     for (DataSnapshot player : dataSnapshot.getChildren()) {
-                        data data = player.getValue(com.example.myapplication.data.class);
+                        data data = player.getValue(com.example.kanchancollection.models.data.class);
                         assert data != null;
                         String date = data.getDate();
                         String bill = data.getRef_no();
@@ -558,9 +553,17 @@ public class reportActivity extends AppCompatActivity {
                 takeScreenShot();
                 break;
             case R.id.action_calculator :
-                Intent i = new Intent(reportActivity.this, Calculator.class);
-                i.putExtra("cash",cashTotal.getText().toString().replace("\u20b9 ","").replace(",",""));
-                startActivity(i);
+                Intent intent = getPackageManager().getLaunchIntentForPackage("com.pccomputeramreli.Cash_Calculator");
+                if (intent != null) {
+                    // We found the activity now start the activity
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                } else {
+                    // Bring user to the market or let them choose an app?
+                    intent = new Intent(Intent.ACTION_VIEW);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setData(Uri.parse("market://details?id=" + "com.pccomputeramreli.Cash_Calculator"));
+                }
+                startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);

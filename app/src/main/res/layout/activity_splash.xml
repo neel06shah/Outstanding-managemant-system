@@ -11,83 +11,92 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
 
         <ImageView
-            android:id="@+id/imgView"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            app:srcCompat="@drawable/impent" />
+            app:srcCompat="@drawable/money" />
 
         <TextView
-            android:id="@+id/textView"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
-            android:paddingTop="100dp"
-            android:text="Outstanding Collecton Report"
+            android:text="Impression Enterprises\nKanchan Traders"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="28sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="Receivables Outstanding"
             android:textColor="@color/colorPrimary"
             android:textSize="28sp" />
     </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/loading"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="18dp"
-        android:visibility="gone">
-    </ProgressBar>
+<!--    <ProgressBar-->
+<!--        android:id="@+id/loading"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_marginBottom="18dp"-->
+<!--        android:visibility="gone">-->
+<!--    </ProgressBar>-->
 
-    <LinearLayout
-        android:id="@+id/buttons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="14dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/buttons"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_marginBottom="14dp"-->
+<!--        android:gravity="center"-->
+<!--        android:orientation="horizontal">-->
 
-        <ImageButton
-            android:id="@+id/sync"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/round_shaped"
-            android:backgroundTint="@color/colorPrimary"
-            android:padding="15dp"
-            android:src="@drawable/ic_sync_black_24dp" />
+<!--        <ImageButton-->
+<!--            android:id="@+id/sync"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/round_shaped"-->
+<!--            android:backgroundTint="@color/colorPrimary"-->
+<!--            android:padding="15dp"-->
+<!--            android:src="@drawable/ic_sync_black_24dp" />-->
 
-        <ImageButton
-            android:id="@+id/checking"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:background="@drawable/round_shaped"
-            android:padding="15dp"
-            android:src="@drawable/ic_check" />
+<!--        <ImageButton-->
+<!--            android:id="@+id/checking"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="25dp"-->
+<!--            android:background="@drawable/round_shaped"-->
+<!--            android:padding="15dp"-->
+<!--            android:src="@drawable/ic_check" />-->
 
-        <ImageButton
-            android:id="@+id/done"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:background="@drawable/round_shaped"
-            android:backgroundTint="@color/colorPrimary"
-            android:padding="15dp"
-            android:src="@drawable/ic_rupee_indian_white" />
+<!--        <ImageButton-->
+<!--            android:id="@+id/done"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="25dp"-->
+<!--            android:background="@drawable/round_shaped"-->
+<!--            android:backgroundTint="@color/colorPrimary"-->
+<!--            android:padding="15dp"-->
+<!--            android:src="@drawable/ic_rupee_indian_white" />-->
 
-        <ImageButton
-            android:id="@+id/report"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="25dp"
-            android:background="@drawable/round_shaped"
-            android:padding="15dp"
-            android:src="@drawable/ic_report" />
+<!--        <ImageButton-->
+<!--            android:id="@+id/report"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="25dp"-->
+<!--            android:background="@drawable/round_shaped"-->
+<!--            android:padding="15dp"-->
+<!--            android:src="@drawable/ic_report" />-->
 
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
 </RelativeLayout>

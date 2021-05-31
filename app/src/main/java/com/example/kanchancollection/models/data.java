@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.kanchancollection.models;
 
 public class data {
     private String Area, Date, Due_on, Party_Name, Contact,Ref_no;
